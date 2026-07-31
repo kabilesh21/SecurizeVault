@@ -51,23 +51,28 @@ const AIAssistant = () => {
       const data = res.data;
 
       let botText = "";
-      if (data.results && data.results.length > 0) {
-        botText = `I searched your profile and found **${data.results.length} matching record(s)**. Here is a summary of what I retrieved:\n\n`;
+      if (data.explanation) {
+        botText = data.explanation;
+        
+        // Append source references if matching records are returned
+        if (data.results && data.results.length > 0) {
+          botText += `\n\n**Source Records:**\n`;
+          data.results.forEach((item, index) => {
+            const skillsPart = item.matchedSkills && item.matchedSkills.length > 0 ? ` — *Skills:* ${item.matchedSkills.join(', ')}` : "";
+            botText += `${index + 1}. **${item.title}** (${item.resultType})${skillsPart}\n`;
+          });
+        }
+      } else if (data.results && data.results.length > 0) {
+        botText = `I searched your portfolio and found **${data.results.length} matching record(s)**. Here is a summary of what I retrieved:\n\n`;
         data.results.forEach((item, index) => {
           botText += `${index + 1}. **${item.title}** (${item.resultType})\n`;
-          if (item.aiSummary) {
-            botText += `   *Summary:* ${item.aiSummary}\n`;
-          }
           if (item.matchedSkills && item.matchedSkills.length > 0) {
             botText += `   *Skills:* ${item.matchedSkills.join(', ')}\n`;
           }
           botText += `\n`;
         });
-        if (data.explanation) {
-          botText += `*AI Explanation:* ${data.explanation}`;
-        }
       } else {
-        botText = "I searched your ingested catalog but couldn't find any direct matches for that query. Try uploading more documents or re-phrasing your search to ask about specific skills, certificates, or projects!";
+        botText = "I searched your ingested catalog but couldn't find any direct matches. Try uploading more documents or re-phrasing your search to ask about specific skills, certificates, or projects!";
       }
 
       const botMsg = {

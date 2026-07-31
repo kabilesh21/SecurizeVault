@@ -68,13 +68,37 @@ async def perform_search(request: SearchRequest):
         # 7. Generate suggestion prompts
         suggestions = generate_suggestions(query, intent_info["name"], filters, ranked_items)
 
+        # 8. Generate conversational explanation using Gemini API
+        from app.utils.gemini import call_gemini
+        
+        retrieved_context = ""
+        for i, res in enumerate(results):
+            skills_str = ", ".join(res.matchedSkills) if res.matchedSkills else "None"
+            retrieved_context += f"- Title: {res.title}, Category: {res.resultType}, Skills: {skills_str}, Organization: {res.organization or 'Unknown'}, Date: {res.displayDate or 'Unknown'}\n"
+            
+        gemini_prompt = f"""
+        You are the MemoryVerse AI Assistant. Answer the student's question based on their portfolio documents.
+        Student's question: "{query}"
+
+        Student's Portfolio Details:
+        {retrieved_context if retrieved_context else "No document credentials exist in the portfolio yet."}
+
+        Provide a direct, conversational, and friendly response answering the question. Reference their specific certificates, skills, projects, or documents if available. Keep your response to 2-4 sentences. Do not mention "context" or "retrieved details" directly.
+        """
+        
+        try:
+            explanation_text = call_gemini(gemini_prompt).strip()
+        except Exception:
+            explanation_text = "I searched your profile but couldn't generate a conversational response right now."
+
         return SearchResponse(
             query=query,
             intent=intent_info,
             filters=filters,
             results=results,
             suggestions=suggestions,
-            processingStatus="COMPLETED"
+            processingStatus="COMPLETED",
+            explanation=explanation_text
         )
 
     except Exception as e:

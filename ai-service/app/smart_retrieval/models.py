@@ -26,6 +26,7 @@ class SearchResponse(BaseModel):
     results: List[SearchResult]
     suggestions: List[str]
     processingStatus: str
+    explanation: Optional[str] = None
 
 class IndexRequest(BaseModel):
     documentId: int
