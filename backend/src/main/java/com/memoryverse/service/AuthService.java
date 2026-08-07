@@ -100,10 +100,8 @@ public class AuthService {
             mailSender.send(message);
             System.out.println("[MemoryVerse] Password reset email sent successfully to: " + user.getEmail());
         } catch (Exception e) {
-            // Log the error but do NOT crash the user flow.
-            // To fix: Go to your Google Account > Security > App Passwords,
-            // generate a 16-char App Password for "Mail", and paste it in application.properties.
             System.err.println("[MemoryVerse] Email send failed (check App Password config): " + e.getMessage());
+            throw new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to send reset email: " + e.getMessage());
         }
     }
 

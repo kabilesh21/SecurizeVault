@@ -25,9 +25,10 @@ const ForgotPassword = () => {
     const res = await forgotPassword(email);
     setLoading(false);
 
-    // Show success regardless — backend may log error but not throw one
-    if (res.success || res.error) {
+    if (res.success) {
       setSuccess(true);
+    } else {
+      setError(res.error);
     }
   };
 
