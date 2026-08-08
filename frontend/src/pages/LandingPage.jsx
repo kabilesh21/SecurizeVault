@@ -82,25 +82,12 @@ const LandingPage = () => {
             Memory<span className="text-sky-500 font-extrabold">Verse</span> <span className="text-xs uppercase bg-sky-500/15 text-sky-700 px-2 py-0.5 rounded font-extrabold align-middle">AI</span>
           </span>
         </div>
-
-        {/* Top Right Create Account */}
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-slate-500 font-bold hidden sm:inline">New here?</span>
-          <Link
-            to="/register"
-            className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95"
-            style={{ background: 'linear-gradient(135deg, #B8864B 0%, #9C6E39 100%)', boxShadow: '0 4px 14px rgba(184,134,75,0.25)' }}
-          >
-            <span>Create Account</span>
-            <FiArrowRight size={14} />
-          </Link>
-        </div>
       </header>
 
       {/* Main Grid: Responsive split panel */}
       <main className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10 px-2 sm:px-4">
         
-        {/* Left Side: Neat Project Title */}
+        {/* Left Side: Neat Project Title, Search, and Create Account CTA */}
         <div className="lg:col-span-7 flex flex-col justify-center items-center lg:items-start text-center lg:text-left z-10 pt-16 lg:pt-0">
           <span className="text-sm font-black text-[#9C6E39] tracking-widest uppercase mb-3">Welcome to</span>
           <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black font-sans tracking-tight text-slate-800 leading-none">
@@ -109,6 +96,41 @@ const LandingPage = () => {
           <p className="text-slate-600 text-sm sm:text-base mt-4 font-bold max-w-md">
             Your AI-powered personal knowledge management system.
           </p>
+
+          <p className="text-slate-500 text-xs sm:text-sm mt-6 leading-relaxed max-w-xl font-medium">
+            MemoryVerse AI enables students and professionals to extract, structure, and search their academic and professional accomplishments. Securely parse your files and visualize your dynamic knowledge graph in real-time.
+          </p>
+
+          {/* Mock search interface representing platform search */}
+          <div className="w-full max-w-lg mt-8 relative">
+            <div className="flex items-center w-full bg-white/70 backdrop-blur-md border border-[#E5D3BC] rounded-2xl p-1.5 shadow-sm">
+              <div className="flex items-center gap-2 px-3 text-slate-400 w-full">
+                <span className="text-slate-400">🔍</span>
+                <input
+                  type="text"
+                  placeholder="Search your certificates, skills, or projects..."
+                  disabled
+                  className="bg-transparent text-xs w-full outline-none text-slate-500 font-medium placeholder-slate-400 cursor-not-allowed"
+                />
+              </div>
+              <button className="bg-[#B8864B] text-white text-xs font-bold px-4 py-2.5 rounded-xl flex-shrink-0 cursor-not-allowed opacity-95 hover:bg-[#9c6e39] transition-all">
+                Search
+              </button>
+            </div>
+          </div>
+
+          {/* Create Account call-to-action placed right near the search input */}
+          <div className="flex items-center gap-3 mt-5 px-1">
+            <span className="text-xs text-slate-500 font-bold">New here?</span>
+            <Link
+              to="/register"
+              className="flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95"
+              style={{ background: 'linear-gradient(135deg, #B8864B 0%, #9C6E39 100%)', boxShadow: '0 4px 14px rgba(184,134,75,0.2)' }}
+            >
+              <span>Create Account</span>
+              <FiArrowRight size={14} />
+            </Link>
+          </div>
         </div>
 
         {/* Right Side: Animated Connector Design & Glassmorphic Login Card */}
