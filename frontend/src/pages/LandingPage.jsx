@@ -100,82 +100,15 @@ const LandingPage = () => {
       {/* Main Grid: Responsive split panel */}
       <main className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10 px-2 sm:px-4">
         
-        {/* Left Side: Rich Information Hub */}
-        <div className="lg:col-span-7 flex flex-col justify-center relative">
-
-          {/* Badge chip */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B8864B]/10 border border-[#B8864B]/20 text-[#9C6E39] text-xs font-black w-fit mb-6 shadow-sm">
-            <FiCpu size={14} className="animate-spin-slow" />
-            <span>AI-POWERED DIGITAL PORTFOLIO PORTAL</span>
-          </div>
-
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black font-sans tracking-tight text-slate-800 leading-[1.1] mb-6">
-            Your Digital Identity,<br />
-            Powered by <span className="text-[#9C6E39] font-black underline decoration-wavy decoration-2 decoration-[#B8864B]">AI.</span>
+        {/* Left Side: Neat Project Title */}
+        <div className="lg:col-span-7 flex flex-col justify-center items-center lg:items-start text-center lg:text-left z-10 pt-16 lg:pt-0">
+          <span className="text-sm font-black text-[#9C6E39] tracking-widest uppercase mb-3">Welcome to</span>
+          <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black font-sans tracking-tight text-slate-800 leading-none">
+            Memory<span className="text-sky-500 font-black">Verse</span> <span className="text-xs uppercase bg-sky-500/15 text-sky-700 px-3 py-1 rounded-lg font-black align-middle">AI</span>
           </h1>
-
-          {/* Subtitle */}
-          <p className="text-slate-600 text-sm md:text-base max-w-xl mb-8 leading-relaxed font-medium">
-            MemoryVerse AI is a next-generation cataloging system. It uses smart OCR extraction and vector databases to index your accomplishments, certificates, resumes, and project reports into a semantic database.
+          <p className="text-slate-600 text-sm sm:text-base mt-4 font-bold max-w-md">
+            Your AI-powered personal knowledge management system.
           </p>
-
-          {/* System Feature Steps (Enlarged) */}
-          <div className="space-y-5 max-w-2xl mb-8">
-            <div className="flex items-start gap-4 p-3 rounded-2xl hover:bg-white/30 transition-all duration-300">
-              <div className="h-11 w-11 rounded-2xl bg-[#B8864B]/10 flex items-center justify-center flex-shrink-0 text-[#9C6E39] shadow-sm">
-                <FiFileText size={20} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-slate-800 text-sm md:text-base">1. Smart Document Ingestion</h4>
-                <p className="text-slate-500 text-xs font-medium mt-0.5">Upload PDFs, certificates, and repository links. Our AI automatically extracts titles, dates, issuers, and skills.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 p-3 rounded-2xl hover:bg-white/30 transition-all duration-300">
-              <div className="h-11 w-11 rounded-2xl bg-[#B8864B]/10 flex items-center justify-center flex-shrink-0 text-[#9C6E39] shadow-sm">
-                <FiGitBranch size={20} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-slate-800 text-sm md:text-base">2. Semantic Knowledge Graphs</h4>
-                <p className="text-slate-500 text-xs font-medium mt-0.5">Build cross-linkages. Watch the system construct a visual topology connecting projects with certifications and core proficiencies.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 p-3 rounded-2xl hover:bg-white/30 transition-all duration-300">
-              <div className="h-11 w-11 rounded-2xl bg-[#B8864B]/10 flex items-center justify-center flex-shrink-0 text-[#9C6E39] shadow-sm">
-                <FiTrendingUp size={20} />
-              </div>
-              <div>
-                <h4 className="font-extrabold text-slate-800 text-sm md:text-base">3. Career Fitment Analytics</h4>
-                <p className="text-slate-500 text-xs font-medium mt-0.5">Measure your credentials against market standards. Map skill gaps, and get personalized recommendations powered by Gemini.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Info stats cards block */}
-          <div className="flex flex-wrap gap-4 mt-4">
-            <div className="py-4 px-6 rounded-2xl bg-white/40 border border-slate-100/50 shadow-sm flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-sky-500/10 text-sky-600 flex items-center justify-center">
-                <FiLayers size={16} />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-black text-slate-800 leading-none">50K+</span>
-                <span className="text-[9px] uppercase font-bold tracking-wider text-slate-500 mt-1">Ingested Documents</span>
-              </div>
-            </div>
-
-            <div className="py-4 px-6 rounded-2xl bg-white/40 border border-slate-100/50 shadow-sm flex items-center gap-3">
-              <div className="h-8 w-8 rounded-lg bg-green-500/10 text-green-600 flex items-center justify-center">
-                <FiShield size={16} />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-black text-slate-800 leading-none">99.9%</span>
-                <span className="text-[9px] uppercase font-bold tracking-wider text-slate-500 mt-1">Verification Accuracy</span>
-              </div>
-            </div>
-          </div>
-
         </div>
 
         {/* Right Side: Animated Connector Design & Glassmorphic Login Card */}
@@ -307,17 +240,10 @@ const LandingPage = () => {
         </div>
       </main>
 
-      {/* Floating System Architecture Badges */}
-      <div className="mt-16 w-full max-w-7xl mx-auto border-t border-[#E5D3BC]/40 pt-8 text-center text-slate-500 text-[10px] z-10 px-2 sm:px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p>&copy; 2026 MemoryVerse AI. All rights reserved. Hackathon Version 2.0.</p>
-        <div className="flex gap-4 font-bold text-slate-600">
-          <span>Module 1: AI Ingestion</span>
-          <span>•</span>
-          <span>Module 2: Graph Builder</span>
-          <span>•</span>
-          <span>Module 3: Gap Analysis</span>
-        </div>
-      </div>
+      {/* Clean Professional Footer */}
+      <footer className="mt-16 w-full max-w-7xl mx-auto border-t border-[#E5D3BC]/40 pt-8 text-center text-slate-500 text-[10px] z-10 px-2 sm:px-4">
+        <p>&copy; 2026 MemoryVerse AI. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
