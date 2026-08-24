@@ -29,6 +29,15 @@ app.include_router(relationships.router, tags=["Relationships"])
 app.include_router(timeline.router, tags=["Timeline"])
 app.include_router(smart_retrieval, tags=["Smart Retrieval"])
 
+@app.on_event("startup")
+async def startup_event():
+    try:
+        from app.smart_retrieval.embedding_service import get_model
+        # Call get_model to trigger loading/downloading SentenceTransformer on startup
+        get_model()
+    except Exception as e:
+        print(f"Warning: startup pre-load failed: {e}")
+
 @app.get("/")
 def read_root():
     return {

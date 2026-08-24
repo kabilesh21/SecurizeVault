@@ -23,14 +23,31 @@ class EmbeddingResponse(BaseModel):
 @router.post("/ocr")
 async def perform_ocr(file: UploadFile = File(...)):
     """
-    Placeholder endpoint for OCR text extraction.
-    Takes a PDF or image and returns dummy extracted text.
+    OCR text extraction using pypdf for PDF files.
     """
     try:
-        # File is read but logic is placeholder
         contents = await file.read()
+        filename = file.filename
+        
+        text = ""
+        if filename.lower().endswith(".pdf"):
+            import io
+            from pypdf import PdfReader
+            try:
+                pdf_file = io.BytesIO(contents)
+                reader = PdfReader(pdf_file)
+                for page in reader.pages:
+                    page_text = page.extract_text()
+                    if page_text:
+                        text += page_text + "\n"
+            except Exception as pe:
+                text = f"PDF parsing error: {str(pe)}"
+        
+        if not text.strip():
+            text = f"Document Ingested: {filename}. Raw text extraction yielded no clean content."
+
         return {
-            "text": f"OCR Placeholder. Processed file '{file.filename}' of size {len(contents)} bytes."
+            "text": text
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

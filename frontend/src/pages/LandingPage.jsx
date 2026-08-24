@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiCpu, FiFileText, FiGitBranch, FiTrendingUp, FiSearch, FiGrid } from 'react-icons/fi';
+import logo from '../assets/logo.jpg';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiFileText, FiGitBranch, FiTrendingUp, FiSearch, FiGrid } from 'react-icons/fi';
 
 const LandingPage = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -61,9 +62,7 @@ const LandingPage = () => {
       <header className="flex flex-col items-center z-10 w-full">
         {/* Brand Logo */}
         <div className="flex items-center gap-2 mb-6">
-          <div className="h-8 w-8 rounded-full bg-[#B8864B] flex items-center justify-center text-white shadow-md">
-            <FiCpu size={16} />
-          </div>
+          <img src={logo} alt="MemoryVerse AI Logo" className="h-8 w-8 rounded-full object-cover shadow-md" />
           <span className="text-2xl font-black font-sans tracking-tight text-slate-800">
             Memory<span className="text-sky-500 font-extrabold">Verse</span> <span className="text-xs uppercase bg-[#B8864B]/15 text-[#9C6E39] px-2 py-0.5 rounded font-extrabold align-middle">AI</span>
           </span>
