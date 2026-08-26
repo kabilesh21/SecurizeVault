@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { userService } from '../services/api';
-import { FiUser, FiMail, FiShield, FiLink, FiGithub, FiExternalLink } from 'react-icons/fi';
+import { FiUser, FiMail, FiShield, FiLink, FiGithub, FiExternalLink, FiEdit3 } from 'react-icons/fi';
 
 const UserProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  // Edit profile states
+  const [isEditing, setIsEditing] = useState(false);
+  const [editUsername, setEditUsername] = useState('');
+  const [editEmail, setEditEmail] = useState('');
+  const [updating, setUpdating] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const fetchProfile = () => {
     userService.getProfile()
       .then(res => {
         setProfile(res.data);
+        setEditUsername(res.data.username || '');
+        setEditEmail(res.data.email || '');
       })
       .catch(err => {
         console.error("Could not fetch user profile", err);
@@ -17,7 +27,36 @@ const UserProfile = () => {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchProfile();
   }, []);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    if (!editUsername.trim() || !editEmail.trim()) {
+      setError("Username and email cannot be empty");
+      return;
+    }
+    setUpdating(true);
+    setError('');
+    setSuccess('');
+    try {
+      const res = await userService.updateProfile({
+        username: editUsername.trim(),
+        email: editEmail.trim()
+      });
+      setProfile(res.data);
+      setIsEditing(false);
+      setSuccess("Profile updated successfully!");
+    } catch (err) {
+      console.error("Failed to update profile", err);
+      setError(err.response?.data?.message || "Failed to update profile details.");
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -48,40 +87,138 @@ const UserProfile = () => {
               {profile?.role === 'ROLE_ADMIN' ? 'Administrator' : 'Student'}
             </span>
           </div>
+
+          <div className="w-full pt-4 border-t border-slate-100 dark:border-slate-800 space-y-3.5 text-left text-xs">
+            <div className="flex justify-between items-center text-slate-550 dark:text-slate-400">
+              <span className="font-semibold">Account Tier</span>
+              <span className="font-bold text-slate-700 dark:text-slate-200">Standard Tier</span>
+            </div>
+            <div className="flex justify-between items-center text-slate-550 dark:text-slate-400">
+              <span className="font-semibold">Vault Security</span>
+              <span className="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                <FiShield size={12} />
+                <span>Protected</span>
+              </span>
+            </div>
+            <div className="flex justify-between items-center text-slate-550 dark:text-slate-400">
+              <span className="font-semibold">Session Status</span>
+              <span className="font-bold text-sky-500">Active</span>
+            </div>
+          </div>
         </div>
 
         {/* Right Card - Profile Details */}
         <div className="glass-panel p-6 md:col-span-2 space-y-6">
-          <div>
-            <h4 className="text-lg font-bold text-slate-800 dark:text-white">Account Details</h4>
-            <p className="text-xs text-slate-450 dark:text-slate-500 mt-0.5 font-medium">Basic information regarding your account</p>
+          <div className="flex justify-between items-start">
+            <div>
+              <h4 className="text-lg font-bold text-slate-800 dark:text-white">Account Details</h4>
+              <p className="text-xs text-slate-450 dark:text-slate-500 mt-0.5 font-medium">Basic information regarding your account</p>
+            </div>
+            {!isEditing && (
+              <button 
+                onClick={() => {
+                  setError('');
+                  setSuccess('');
+                  setIsEditing(true);
+                }}
+                className="px-3 py-1.5 bg-indigo-650 hover:bg-indigo-600 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow"
+              >
+                <FiEdit3 size={13} />
+                <span>Edit Profile</span>
+              </button>
+            )}
           </div>
 
-          <div className="space-y-4">
-            <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl">
-              <FiUser className="text-slate-400" size={20} />
-              <div>
-                <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider">Username</label>
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{profile?.username}</span>
-              </div>
-            </div>
+          {error && <p className="text-xs text-red-500 font-semibold bg-red-500/5 border border-red-500/10 p-2.5 rounded-lg">{error}</p>}
+          {success && <p className="text-xs text-emerald-500 font-semibold bg-emerald-500/5 border border-emerald-500/10 p-2.5 rounded-lg">{success}</p>}
 
-            <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl">
-              <FiMail className="text-slate-400" size={20} />
-              <div>
-                <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider">Email Address</label>
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{profile?.email}</span>
+          {isEditing ? (
+            <form onSubmit={handleSave} className="space-y-4">
+              <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl">
+                <FiUser className="text-slate-400 shrink-0" size={20} />
+                <div className="flex-1">
+                  <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider mb-1">Username</label>
+                  <input 
+                    type="text" 
+                    value={editUsername} 
+                    onChange={(e) => setEditUsername(e.target.value)}
+                    className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-sm outline-none text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/20"
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl">
-              <FiShield className="text-slate-400" size={20} />
-              <div>
-                <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider">Access Scope</label>
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{profile?.role}</span>
+              <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl">
+                <FiMail className="text-slate-400 shrink-0" size={20} />
+                <div className="flex-1">
+                  <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider mb-1">Email Address</label>
+                  <input 
+                    type="email" 
+                    value={editEmail} 
+                    onChange={(e) => setEditEmail(e.target.value)}
+                    className="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2 text-sm outline-none text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500/20"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl opacity-60">
+                <FiShield className="text-slate-400 shrink-0" size={20} />
+                <div>
+                  <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider">Access Scope</label>
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{profile?.role}</span>
+                </div>
+              </div>
+
+              <div className="flex gap-3 justify-end pt-2">
+                <button 
+                  type="button"
+                  onClick={() => {
+                    setEditUsername(profile.username);
+                    setEditEmail(profile.email);
+                    setIsEditing(false);
+                    setError('');
+                  }}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  disabled={updating}
+                  className="px-5 py-2 bg-indigo-650 hover:bg-indigo-600 text-white rounded-xl text-xs font-bold disabled:opacity-50"
+                >
+                  {updating ? 'Saving...' : 'Save Details'}
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl">
+                <FiUser className="text-slate-400" size={20} />
+                <div>
+                  <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider">Username</label>
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{profile?.username}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl">
+                <FiMail className="text-slate-400" size={20} />
+                <div>
+                  <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider">Email Address</label>
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{profile?.email}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-slate-100/60 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-850 rounded-xl">
+                <FiShield className="text-slate-400" size={20} />
+                <div>
+                  <label className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase font-bold tracking-wider">Access Scope</label>
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{profile?.role}</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Linked Repositories & Portfolios */}
           <div className="border-t border-slate-200/60 dark:border-slate-800/80 pt-6 space-y-4">

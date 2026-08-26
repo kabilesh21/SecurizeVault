@@ -11,9 +11,6 @@ const MainLayout = ({ children }) => {
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-slate-50 dark:bg-slate-950">
-      {/* Sidebar Navigation */}
-      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-
       {/* Main Content Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top Navbar */}
@@ -24,6 +21,9 @@ const MainLayout = ({ children }) => {
           {children}
         </main>
       </div>
+
+      {/* Sidebar Navigation */}
+      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
     </div>
   );
 };

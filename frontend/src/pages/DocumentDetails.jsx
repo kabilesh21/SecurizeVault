@@ -9,6 +9,29 @@ import {
 } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
+const getCategoryIcon = (categoryName) => {
+  switch (categoryName?.toUpperCase()) {
+    case 'CERTIFICATE':
+      return <FiAward size={20} />;
+    case 'RESUME':
+      return <FiBookOpen size={20} />;
+    case 'PROJECT_REPORT':
+      return <FiActivity size={20} />;
+    case 'INTERNSHIP_LETTER':
+      return <FiBriefcase size={20} />;
+    case 'PORTFOLIO_LINK':
+      return <FiLink size={20} />;
+    case 'GITHUB_REPO':
+      return <FiGithub size={20} />;
+    case 'OTHER_ACADEMIC':
+      return <FiBookOpen size={20} />;
+    case 'OTHER_PROFESSIONAL':
+      return <FiFolder size={20} />;
+    default:
+      return <FiCpu size={20} />;
+  }
+};
+
 const DocumentDetails = () => {
   const { documentId } = useParams();
   const navigate = useNavigate();
@@ -32,17 +55,57 @@ const DocumentDetails = () => {
 
   const fetchDetails = async () => {
     try {
+      // 1. Fetch categories list independently first
+      try {
+        const catsRes = await categorizationService.getCategories();
+        setCategories(catsRes.data);
+        if (catsRes.data.length > 0) {
+          setSelectedCategoryId(catsRes.data[0].id);
+        }
+      } catch (catsErr) {
+        console.error("Failed to load categories list:", catsErr);
+      }
+
       const docRes = await documentService.getById(documentId);
       const documentData = docRes.data;
       setDoc(documentData);
       
-      const analysisRes = await categorizationService.getResults(documentId);
-      setAnalysis(analysisRes.data);
-      
-      const catsRes = await categorizationService.getCategories();
-      setCategories(catsRes.data);
-      if (catsRes.data.length > 0) {
-        setSelectedCategoryId(catsRes.data[0].id);
+      let analysisData = null;
+      try {
+        const analysisRes = await categorizationService.getResults(documentId);
+        analysisData = analysisRes.data;
+        setAnalysis(analysisData);
+      } catch (analysisErr) {
+        console.log("No analysis results found yet, will attempt auto-generation if pending/unknown.");
+      }
+
+      // Check if document needs auto-processing:
+      // Status is PENDING, or category is UNKNOWN / PENDING_CLASSIFICATION, or analysis is missing,
+      // or analysis has status PENDING/FAILED, or category is UNKNOWN.
+      const isPendingOrUnknown = 
+        documentData.status === 'PENDING' || 
+        documentData.category === 'PENDING_CLASSIFICATION' || 
+        documentData.category === 'UNKNOWN' ||
+        !analysisData || 
+        analysisData.activeCategory === 'UNKNOWN' || 
+        analysisData.processingStatus === 'PENDING' ||
+        analysisData.processingStatus === 'FAILED';
+
+      if (isPendingOrUnknown && !reprocessing) {
+        setReprocessing(true);
+        try {
+          const reprocessRes = await categorizationService.reprocess(documentId);
+          analysisData = reprocessRes.data;
+          setAnalysis(analysisData);
+          
+          // Fetch updated document details to show the new category
+          const updatedDocRes = await documentService.getById(documentId);
+          setDoc(updatedDocRes.data);
+        } catch (reprocessErr) {
+          console.error("Auto-extraction failed:", reprocessErr);
+        } finally {
+          setReprocessing(false);
+        }
       }
 
       // Fetch secure document blob for preview (attaches JWT automatically)
@@ -130,6 +193,16 @@ const DocumentDetails = () => {
     } finally {
       setSavingCategory(false);
     }
+  };
+
+  const handleEditClick = () => {
+    if (doc && doc.category) {
+      const matchedCat = categories.find(c => c.name === doc.category);
+      if (matchedCat) {
+        setSelectedCategoryId(matchedCat.id);
+      }
+    }
+    setIsEditingCategory(true);
   };
 
   const formatBytes = (bytes) => {
@@ -268,7 +341,7 @@ const DocumentDetails = () => {
               
               {!isEditingCategory && (
                 <button 
-                  onClick={() => setIsEditingCategory(true)}
+                  onClick={handleEditClick}
                   className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-indigo-600 dark:text-indigo-400"
                   title="Correct Category"
                 >
@@ -284,10 +357,16 @@ const DocumentDetails = () => {
                 <select 
                   value={selectedCategoryId} 
                   onChange={(e) => setSelectedCategoryId(e.target.value)}
-                  className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-2 text-xs outline-none text-slate-700 dark:text-white"
+                  className="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl p-2.5 text-xs outline-none text-slate-850 dark:text-white cursor-pointer focus:ring-2 focus:ring-indigo-500/20"
                 >
                   {categories.map(c => (
-                    <option key={c.id} value={c.id}>{c.name.replace('_', ' ')}</option>
+                    <option 
+                      key={c.id} 
+                      value={c.id} 
+                      className="bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100"
+                    >
+                      {c.name.replace('_', ' ')}
+                    </option>
                   ))}
                 </select>
                 <div className="flex gap-2">
@@ -310,7 +389,7 @@ const DocumentDetails = () => {
               <div className="flex items-center gap-4 p-4 bg-indigo-500/5 border border-indigo-500/10 rounded-xl justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center">
-                    <FiCpu size={20} />
+                    {getCategoryIcon(analysis?.activeCategory)}
                   </div>
                   <div>
                     <label className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Category</label>

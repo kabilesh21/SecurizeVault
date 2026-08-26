@@ -35,13 +35,13 @@ const Login = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden px-4"
-      style={{ background: 'linear-gradient(135deg, #F5EBE0 0%, #E3D5CA 50%, #FAF5EE 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #EBF6F6 0%, #DDF4F1 50%, #F4F9F9 100%)' }}
     >
       {/* Soft decorative blobs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl"
-        style={{ background: 'radial-gradient(circle, rgba(224,204,180,0.45) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(circle, rgba(58,175,170,0.15) 0%, transparent 70%)' }} />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl"
-        style={{ background: 'radial-gradient(circle, rgba(213,194,177,0.35) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(circle, rgba(221,244,241,0.2) 0%, transparent 70%)' }} />
 
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -52,14 +52,14 @@ const Login = () => {
         {/* Brand header */}
         <div className="flex flex-col items-center mb-8">
           <span className="text-2xl font-black font-sans tracking-tight text-slate-800">
-            Memory<span className="text-sky-500 font-extrabold">Verse</span> <span className="text-xs uppercase bg-sky-500/15 text-sky-700 px-2 py-0.5 rounded font-extrabold align-middle">AI</span>
+            Securize<span className="text-indigo-600 font-extrabold">Vault</span>
           </span>
           <p className="text-slate-500 text-sm mt-2 font-medium">Your AI-powered personal knowledge hub</p>
         </div>
 
         {/* Card */}
         <div className="rounded-3xl p-8 shadow-2xl"
-          style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px)', border: '1px solid rgba(224,204,180,0.6)' }}>
+          style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(20px)', border: '1px solid rgba(176,230,226,0.4)' }}>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
@@ -83,12 +83,12 @@ const Login = () => {
                   onChange={(e) => setUsernameOrEmail(e.target.value)}
                   className="w-full rounded-xl pl-11 pr-4 py-3 text-xs text-slate-800 outline-none transition-all duration-300 placeholder-slate-400"
                   style={{
-                    background: '#FAF6F0',
-                    border: '1.5px solid #E5D3BC',
-                    boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.04)'
+                    background: '#FFFFFF',
+                    border: '1.5px solid #AEC8C8',
+                    boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.02)'
                   }}
-                  onFocus={e => e.target.style.borderColor = '#B8864B'}
-                  onBlur={e => e.target.style.borderColor = '#E5D3BC'}
+                  onFocus={e => e.target.style.borderColor = '#3AAFAA'}
+                  onBlur={e => e.target.style.borderColor = '#AEC8C8'}
                 />
               </div>
             </div>
@@ -99,7 +99,7 @@ const Login = () => {
                 <label className="text-[11px] font-bold uppercase tracking-widest text-slate-500">Password</label>
                 <Link to="/forgot-password"
                   className="text-xs font-bold hover:opacity-80 transition-opacity"
-                  style={{ color: '#7E5529' }}>
+                  style={{ color: '#237F7B' }}>
                   Forgot Password?
                 </Link>
               </div>
@@ -112,12 +112,12 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full rounded-xl pl-11 pr-4 py-3 text-xs text-slate-800 outline-none transition-all duration-300 placeholder-slate-400"
                   style={{
-                    background: '#FAF6F0',
-                    border: '1.5px solid #E5D3BC',
-                    boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.04)'
+                    background: '#FFFFFF',
+                    border: '1.5px solid #AEC8C8',
+                    boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.02)'
                   }}
-                  onFocus={e => e.target.style.borderColor = '#B8864B'}
-                  onBlur={e => e.target.style.borderColor = '#E5D3BC'}
+                  onFocus={e => e.target.style.borderColor = '#3AAFAA'}
+                  onBlur={e => e.target.style.borderColor = '#AEC8C8'}
                 />
               </div>
             </div>
@@ -127,7 +127,7 @@ const Login = () => {
               type="submit"
               disabled={loading}
               className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-xs text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group active:scale-[0.98]"
-              style={{ background: 'linear-gradient(135deg, #B8864B 0%, #9C6E39 100%)', boxShadow: '0 4px 18px rgba(184,134,75,0.25)' }}
+              style={{ background: 'linear-gradient(135deg, #3AAFAA 0%, #237F7B 100%)', boxShadow: '0 4px 18px rgba(58,175,170,0.25)' }}
             >
               {loading ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
@@ -143,7 +143,7 @@ const Login = () => {
           {/* Register link */}
           <p className="text-center text-slate-500 text-xs mt-6 font-medium">
             Don't have an account?{' '}
-            <Link to="/register" className="font-extrabold hover:opacity-80 transition-opacity" style={{ color: '#7E5529' }}>
+            <Link to="/register" className="font-extrabold hover:opacity-80 transition-opacity" style={{ color: '#237F7B' }}>
               Create an account
             </Link>
           </p>

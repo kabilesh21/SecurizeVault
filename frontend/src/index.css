@@ -5,8 +5,8 @@
 @layer base {
   body {
     font-family: 'Outfit', 'Inter', sans-serif;
-    background-color: #FAF5EE;
-    color: #5F3D18;
+    background-color: #F4F9F9; /* Background */
+    color: #123047; /* Text */
     position: relative;
     min-height: 100vh;
   }
@@ -28,9 +28,9 @@
     pointer-events: none;
     z-index: -1;
     background: 
-      radial-gradient(circle at 10% 20%, rgba(140, 91, 112, 0.06) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(184, 134, 75, 0.05) 0%, transparent 45%),
-      radial-gradient(circle at 50% 50%, rgba(245, 194, 155, 0.03) 0%, transparent 50%);
+      radial-gradient(circle at 10% 20%, rgba(58, 175, 170, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(221, 244, 241, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(35, 127, 123, 0.03) 0%, transparent 50%);
   }
 }
 

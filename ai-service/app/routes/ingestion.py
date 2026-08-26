@@ -19,6 +19,25 @@ class MetadataResponse(BaseModel):
 class EmbeddingResponse(BaseModel):
     embeddingStatus: str
 
+def clean_character_spaced_text(text: str) -> str:
+    import re
+    lines = text.split("\n")
+    cleaned_lines = []
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            cleaned_lines.append("")
+            continue
+        words_single = [w for w in stripped.split(" ") if w]
+        avg_len = sum(len(w) for w in words_single) / len(words_single) if words_single else 0
+        if len(words_single) > 3 and avg_len < 1.6:
+            real_words = re.split(r'\s{2,}', stripped)
+            cleaned_words = [rw.replace(" ", "") for rw in real_words if rw]
+            cleaned_lines.append(" ".join(cleaned_words))
+        else:
+            cleaned_lines.append(line)
+    return "\n".join(cleaned_lines)
+
 # Endpoints
 @router.post("/ocr")
 async def perform_ocr(file: UploadFile = File(...)):
@@ -42,7 +61,22 @@ async def perform_ocr(file: UploadFile = File(...)):
                         text += page_text + "\n"
             except Exception as pe:
                 text = f"PDF parsing error: {str(pe)}"
+        elif filename.lower().endswith((".png", ".jpg", ".jpeg")):
+            import base64
+            from app.utils.gemini import call_gemini_multimodal
+            try:
+                mime_type = "image/png" if filename.lower().endswith(".png") else "image/jpeg"
+                base64_data = base64.b64encode(contents).decode("utf-8")
+                prompt = "Transcribe all readable text from this document image precisely. Keep formatting as close as possible to the original. Do not add any introduction or explanations."
+                ocr_result = call_gemini_multimodal(prompt, mime_type, base64_data)
+                if ocr_result and not ocr_result.startswith("Gemini multimodal API invocation failed"):
+                    text = ocr_result
+            except Exception as ie:
+                text = f"Image OCR parsing error: {str(ie)}"
         
+        if text.strip():
+            text = clean_character_spaced_text(text)
+            
         if not text.strip():
             text = f"Document Ingested: {filename}. Raw text extraction yielded no clean content."
 
@@ -79,7 +113,7 @@ async def extract_metadata(
     fallback_data = {
         "title": title_fallback,
         "skills": ["Java", "Python", "React", "Docker"] if category_fallback == "RESUME" else [],
-        "organization": "MemoryVerse University" if category_fallback == "CERTIFICATE" else "Mock Corporation",
+        "organization": "SecurizeVault University" if category_fallback == "CERTIFICATE" else "Mock Corporation",
         "year": "2026",
         "category": category_fallback
     }
@@ -115,7 +149,7 @@ async def extract_metadata(
     """
     
     try:
-        response_text = call_gemini(prompt).strip()
+        response_text = call_gemini(prompt, json_mode=True).strip()
         # Clean potential markdown JSON syntax
         if response_text.startswith("```"):
             response_text = response_text.split("```")[1]

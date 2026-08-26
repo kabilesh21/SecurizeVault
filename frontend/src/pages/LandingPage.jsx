@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import logo from '../assets/logo.jpg';
-import { FiMail, FiLock, FiEye, FiEyeOff, FiFileText, FiGitBranch, FiTrendingUp, FiSearch, FiGrid } from 'react-icons/fi';
+import logo from '../assets/logo.png';
+import { FiMail, FiLock, FiEye, FiEyeOff, FiFileText, FiGitBranch, FiTrendingUp, FiSearch, FiGrid, FiUser } from 'react-icons/fi';
 
 const LandingPage = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('');
@@ -36,176 +36,126 @@ const LandingPage = () => {
   };
 
   return (
-    <div
-      className="relative min-h-screen flex flex-col justify-between items-center overflow-x-hidden px-4 py-12 md:py-16 selection:bg-[#B8864B]/20"
-      style={{ background: 'linear-gradient(135deg, #F5EBE0 0%, #E3D5CA 50%, #FAF5EE 100%)' }}
+    <div 
+      className="min-h-screen w-full flex items-center justify-center p-4 selection:bg-teal-500/20 overflow-x-hidden"
+      style={{ background: 'linear-gradient(135deg, #F4F9F9 0%, #DDF4F1 100%)' }}
     >
-      {/* Decorative Blob Shapes (Positioned organically matching the Mangools layout) */}
-      <div
-        className="absolute top-1/4 right-[12%] w-48 h-48 md:w-64 md:h-64 pointer-events-none -z-10 opacity-70 animate-pulse"
-        style={{
-          background: 'linear-gradient(135deg, #E5D3BC 0%, #B8864B 100%)',
-          borderRadius: '43% 57% 73% 27% / 45% 40% 60% 55%',
-          animationDuration: '6s'
-        }}
-      />
-      <div
-        className="absolute bottom-1/3 left-[10%] w-28 h-28 md:w-36 md:h-36 pointer-events-none -z-10 opacity-70 animate-pulse"
-        style={{
-          background: 'linear-gradient(135deg, #E5D3BC 0%, #B8864B 100%)',
-          borderRadius: '63% 37% 54% 46% / 55% 48% 52% 45%',
-          animationDuration: '8s'
-        }}
-      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="max-w-6xl w-full bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 overflow-hidden flex flex-col md:flex-row min-h-[600px] relative"
+      >
+        {/* Floating Capsule Blobs - Scattered across both left and right sides of the card wrapper */}
+        <div className="absolute -top-12 -left-16 w-48 h-96 rounded-full bg-gradient-to-b from-teal-200/40 to-teal-400/50 transform rotate-[32deg] pointer-events-none z-0" />
+        <div className="absolute top-16 left-6 w-32 h-64 rounded-full bg-gradient-to-b from-teal-100/30 to-indigo-300/40 transform rotate-[32deg] pointer-events-none z-0" />
+        <div className="absolute -bottom-16 left-16 w-44 h-56 rounded-full bg-gradient-to-tr from-amber-100/40 via-teal-200/40 to-teal-300/50 transform rotate-[32deg] pointer-events-none z-0" />
+        <div className="absolute -top-10 right-20 w-36 h-64 rounded-full bg-gradient-to-bl from-teal-100/30 to-teal-200/40 transform rotate-[32deg] pointer-events-none z-0" />
+        <div className="absolute -bottom-12 right-6 w-40 h-56 rounded-full bg-gradient-to-tr from-indigo-100/30 via-teal-100/40 to-teal-200/50 transform rotate-[32deg] pointer-events-none z-0" />
 
-      {/* Top Header - Brand Logo and Title */}
-      <header className="flex flex-col items-center z-10 w-full">
-        {/* Brand Logo */}
-        <div className="flex items-center gap-2 mb-6">
-          <img src={logo} alt="MemoryVerse AI Logo" className="h-8 w-8 rounded-full object-cover shadow-md" />
-          <span className="text-2xl font-black font-sans tracking-tight text-slate-800">
-            Memory<span className="text-sky-500 font-extrabold">Verse</span> <span className="text-xs uppercase bg-[#B8864B]/15 text-[#9C6E39] px-2 py-0.5 rounded font-extrabold align-middle">AI</span>
-          </span>
+        {/* Center Vertical Curved S-Curve Divider Line */}
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-16 pointer-events-none hidden md:block z-20">
+          <svg className="h-full w-full text-slate-100 fill-none stroke-current" viewBox="0 0 100 1000" preserveAspectRatio="none">
+            <path d="M 50 0 C 85 250, 15 750, 50 1000" strokeWidth="2.5" />
+          </svg>
         </div>
 
-        {/* Good to see you again Title */}
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-800">
-          Good to see you again
-        </h2>
-      </header>
+        <div className="md:w-1/2 flex items-center justify-center p-8 min-h-[250px] md:min-h-full bg-transparent z-10">
+          {/* Left Side Branding Overlay */}
+          <div className="text-center space-y-4 max-w-xs drop-shadow-sm px-4">
+            <img src={logo} alt="SecurizeVault Logo" className="h-28 w-auto object-contain mx-auto pointer-events-none" />
+            <p className="text-xs text-slate-550 font-bold leading-relaxed pt-2">
+              Unlock the power of your academic records. Trace skill pathways to industry careers.
+            </p>
+          </div>
+        </div>
 
-      {/* Centered Login Card */}
-      <main className="w-full max-w-md my-8 md:my-10 z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100/80"
-        >
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && (
-              <div
-                className="p-3.5 rounded-xl text-xs font-semibold border"
-                style={{ background: '#FEF2F2', borderColor: '#FECACA', color: '#DC2626' }}
-              >
-                {error}
-              </div>
-            )}
-
-            {/* Email / Username Field */}
-            <div className="space-y-2">
-              <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Your email or username</label>
-              <div className="flex border border-slate-200 rounded-xl overflow-hidden focus-within:border-[#B8864B] transition-all bg-slate-50">
-                <div className="flex items-center justify-center w-12 border-r border-slate-200 bg-slate-50 text-slate-400">
-                  <FiMail size={16} />
-                </div>
-                <input
-                  type="text"
-                  placeholder="e.g. elon@tesla.com"
-                  value={usernameOrEmail}
-                  onChange={(e) => setUsernameOrEmail(e.target.value)}
-                  className="w-full px-4 py-3.5 text-xs text-slate-800 bg-transparent outline-none placeholder-slate-400"
-                />
-              </div>
+        {/* Right Side: Interactive Login Form Side */}
+        <div className="md:w-1/2 flex flex-col justify-center px-8 py-10 md:px-14 lg:px-16 bg-transparent z-10">
+          <div className="max-w-sm w-full mx-auto space-y-6">
+            
+            <div className="text-center md:text-left space-y-1">
+              <h2 className="text-2xl font-black text-slate-800 tracking-tight">SecurizeVault</h2>
+              <p className="text-slate-400 text-xs font-semibold">Welcome back! Please enter your details.</p>
             </div>
 
-            {/* Password Field */}
-            <div className="space-y-2">
-              <label className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Your password</label>
-              <div className="flex border border-slate-200 rounded-xl overflow-hidden focus-within:border-[#B8864B] transition-all bg-slate-50">
-                <div className="flex items-center justify-center w-12 border-r border-slate-200 bg-slate-50 text-slate-400">
-                  <FiLock size={16} />
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <div
+                  className="p-3.5 rounded-xl text-xs font-semibold border"
+                  style={{ background: '#FEF2F2', borderColor: '#FECACA', color: '#DC2626' }}
+                >
+                  {error}
                 </div>
+              )}
+
+              {/* Username Input with icon on the LEFT */}
+              <div className="relative">
+                <FiUser className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 pointer-events-none" size={15} />
+                <input
+                  type="text"
+                  placeholder="Username or Email"
+                  value={usernameOrEmail}
+                  onChange={(e) => setUsernameOrEmail(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3.5 text-xs text-slate-850 bg-slate-100/70 border border-transparent rounded-xl outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all placeholder-slate-400 font-medium"
+                  required
+                />
+              </div>
+
+              {/* Password Input with icon on the LEFT */}
+              <div className="relative">
+                <FiLock className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 pointer-events-none" size={15} />
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="e.g. ilovememoryverse123"
+                  placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3.5 text-xs text-slate-800 bg-transparent outline-none placeholder-slate-400"
+                  className="w-full pl-11 pr-12 py-3.5 text-xs text-slate-855 bg-slate-100/70 border border-transparent rounded-xl outline-none focus:bg-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/10 transition-all placeholder-slate-400 font-medium"
+                  required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="px-3 text-slate-400 hover:text-slate-600 transition-colors"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                 >
                   {showPassword ? <FiEyeOff size={15} /> : <FiEye size={15} />}
                 </button>
               </div>
+
+              {/* Submit Button with teal gradient */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-500 hover:to-teal-700 shadow shadow-teal-500/10 active:scale-[0.98] transition-all tracking-wider uppercase mt-2"
+              >
+                {loading ? (
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent mx-auto"></div>
+                ) : (
+                  <span>LOGIN</span>
+                )}
+              </button>
+            </form>
+
+            {/* Links Section */}
+            <div className="flex flex-col items-center gap-3 text-xs font-semibold pt-2">
+              <Link to="/forgot-password" className="hover:underline text-[11px] text-slate-400 hover:text-slate-600">
+                Forgot Username / Password?
+              </Link>
+              <Link to="/register" className="hover:underline text-xs text-slate-600 hover:text-slate-800">
+                Create Your Account &rarr;
+              </Link>
             </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-bold text-xs text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] hover:opacity-95"
-              style={{ background: 'linear-gradient(135deg, #B8864B 0%, #9C6E39 100%)', boxShadow: '0 4px 14px rgba(184,134,75,0.2)' }}
-            >
-              {loading ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
-              ) : (
-                <span>Sign in</span>
-              )}
-            </button>
-          </form>
+            {/* Bottom Footer Info */}
+            <div className="text-center text-[10px] text-slate-400 font-medium pt-4 space-x-2 border-t border-slate-100">
+              <a href="/terms" className="hover:underline hover:text-slate-600 transition-colors">Terms of use</a>
+              <span>•</span>
+              <a href="/privacy" className="hover:underline hover:text-slate-600 transition-colors">Privacy policy</a>
+            </div>
 
-          {/* Links Row */}
-          <div className="flex items-center justify-between text-xs font-bold mt-6 px-1">
-            <Link to="/register" className="text-blue-600 hover:underline">
-              Don't have an account?
-            </Link>
-            <Link to="/forgot-password" className="text-blue-600 hover:underline">
-              Forgot password?
-            </Link>
           </div>
-        </motion.div>
-      </main>
-
-      {/* Bottom Footer - Row of Module Pills */}
-      <footer className="w-full max-w-5xl z-10 mt-6">
-        <div className="flex flex-wrap items-center justify-center gap-4">
-          
-          <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-slate-200/50 px-4 py-2 rounded-2xl shadow-sm text-slate-700 hover:scale-[1.02] transition-transform select-none">
-            <div className="h-2 w-2 rounded-full bg-red-500" />
-            <span className="text-[11px] font-bold tracking-tight flex items-center gap-1.5">
-              <FiFileText className="text-red-500" size={13} />
-              AI Ingestion
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-slate-200/50 px-4 py-2 rounded-2xl shadow-sm text-slate-700 hover:scale-[1.02] transition-transform select-none">
-            <div className="h-2 w-2 rounded-full bg-amber-500" />
-            <span className="text-[11px] font-bold tracking-tight flex items-center gap-1.5">
-              <FiGitBranch className="text-amber-500" size={13} />
-              Graph Builder
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-slate-200/50 px-4 py-2 rounded-2xl shadow-sm text-slate-700 hover:scale-[1.02] transition-transform select-none">
-            <div className="h-2 w-2 rounded-full bg-indigo-500" />
-            <span className="text-[11px] font-bold tracking-tight flex items-center gap-1.5">
-              <FiTrendingUp className="text-indigo-500" size={13} />
-              Gap Analysis
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-slate-200/50 px-4 py-2 rounded-2xl shadow-sm text-slate-700 hover:scale-[1.02] transition-transform select-none">
-            <div className="h-2 w-2 rounded-full bg-blue-500" />
-            <span className="text-[11px] font-bold tracking-tight flex items-center gap-1.5">
-              <FiSearch className="text-blue-500" size={13} />
-              Semantic Search
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-slate-200/50 px-4 py-2 rounded-2xl shadow-sm text-slate-700 hover:scale-[1.02] transition-transform select-none">
-            <div className="h-2 w-2 rounded-full bg-emerald-500" />
-            <span className="text-[11px] font-bold tracking-tight flex items-center gap-1.5">
-              <FiGrid className="text-emerald-500" size={13} />
-              Dashboard
-            </span>
-          </div>
-
         </div>
-      </footer>
+      </motion.div>
     </div>
   );
 };

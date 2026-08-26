@@ -223,7 +223,7 @@ const RelationshipExplorer = () => {
 
                     {/* Method source */}
                     <td className="p-4 text-[10px] font-mono uppercase tracking-wide text-slate-450 dark:text-slate-500">
-                      {rel.relationshipSource}
+                      {rel.relationshipSource === 'USER_CONFIRMED' ? 'CONFIRMED' : rel.relationshipSource?.replace('_', ' ')}
                     </td>
 
                     {/* Status */}

@@ -8,6 +8,7 @@ import {
   FiChevronRight, FiGrid, FiGitCommit, FiLayers,
   FiCalendar, FiTrendingUp, FiStar, FiZap, FiSearch
 } from 'react-icons/fi';
+import { TbRobot } from 'react-icons/tb';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
@@ -221,7 +222,7 @@ const Dashboard = () => {
           className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-indigo-650 hover:bg-indigo-600 text-white text-xs font-bold transition-colors w-full sm:w-auto justify-center"
         >
           <FiSearch size={13} />
-          <span>Ask MemoryVerse</span>
+          <span>Ask Here</span>
         </button>
       </div>
 
@@ -286,7 +287,7 @@ const Dashboard = () => {
         <div className="glass-panel p-5 border border-indigo-500/20 bg-indigo-500/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex items-center gap-4">
             <div className="h-12 w-12 bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center shrink-0">
-              <FiCpu size={24} />
+              <TbRobot size={24} />
             </div>
             <div>
               <span className="text-[10px] text-slate-455 dark:text-slate-500 font-bold uppercase tracking-wider">Top Recommended Career Path</span>

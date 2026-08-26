@@ -1,5 +1,6 @@
 import re
 from typing import Dict, List
+from app.categorization.text_preprocessor import tokenize
 
 def extract_entities(text: str, file_name: str = "") -> Dict[str, List[str]]:
     """

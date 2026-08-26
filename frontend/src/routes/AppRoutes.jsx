@@ -23,6 +23,8 @@ import AIAssistant from '../pages/AIAssistant';
 import Analytics from '../pages/Analytics';
 import CareerInsights from '../pages/CareerInsights';
 import ResetPassword from '../pages/ResetPassword';
+import TermsOfUse from '../pages/TermsOfUse';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
 
 // Sidebar and Navbar Layout Component
 import MainLayout from '../components/common/MainLayout';
@@ -66,6 +68,8 @@ const AppRoutes = () => {
       <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
       <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
       <Route path="/reset-password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
+      <Route path="/terms" element={<TermsOfUse />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
 
       {/* Main App Protected Routes */}
       <Route path="/dashboard" element={<ProtectedRoute><MainLayout><Dashboard /></MainLayout></ProtectedRoute>} />

@@ -9,7 +9,7 @@ try:
 except ImportError:
     pass
 
-def call_gemini(prompt: str) -> str:
+def call_gemini(prompt: str, json_mode: bool = False) -> str:
     """
     Calls the Gemini API to generate content using the GEMINI_API_KEY environment variable.
     """
@@ -17,7 +17,7 @@ def call_gemini(prompt: str) -> str:
     if not gemini_key:
         return "Gemini API key is not configured. Please set the GEMINI_API_KEY environment variable in your .env file."
         
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_key}"
+    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-3.6-flash:generateContent?key={gemini_key}"
     payload = {
         "contents": [
             {
@@ -29,6 +29,11 @@ def call_gemini(prompt: str) -> str:
             }
         ]
     }
+    
+    if json_mode:
+        payload["generationConfig"] = {
+            "responseMimeType": "application/json"
+        }
     
     try:
         data = json.dumps(payload).encode('utf-8')
@@ -52,3 +57,53 @@ def call_gemini(prompt: str) -> str:
             
     except Exception as e:
         return f"Gemini API invocation failed: {str(e)}"
+
+def call_gemini_multimodal(prompt: str, mime_type: str, base64_data: str) -> str:
+    """
+    Calls Gemini API with multimodal input (text prompt + image).
+    """
+    gemini_key = os.getenv("GEMINI_API_KEY", "")
+    if not gemini_key:
+        return "Gemini API key is not configured. Please set the GEMINI_API_KEY environment variable in your .env file."
+        
+    url = f"https://generativelanguage.googleapis.com/v1/models/gemini-3.6-flash:generateContent?key={gemini_key}"
+    payload = {
+        "contents": [
+            {
+                "parts": [
+                    {
+                        "text": prompt
+                    },
+                    {
+                        "inlineData": {
+                            "mimeType": mime_type,
+                            "data": base64_data
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    
+    try:
+        data = json.dumps(payload).encode('utf-8')
+        req = urllib.request.Request(
+            url,
+            data=data,
+            headers={'Content-Type': 'application/json'},
+            method='POST'
+        )
+        
+        with urllib.request.urlopen(req, timeout=25) as response:
+            res_body = response.read().decode('utf-8')
+            res_json = json.loads(res_body)
+            
+            candidates = res_json.get("candidates", [])
+            if candidates:
+                parts = candidates[0].get("content", {}).get("parts", [])
+                if parts:
+                    return parts[0].get("text", "")
+            return "Unable to parse response from Gemini."
+            
+    except Exception as e:
+        return f"Gemini multimodal API invocation failed: {str(e)}"

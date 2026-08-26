@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FiBriefcase, FiAward, FiCpu, FiCheckCircle, FiSearch, FiBookOpen } from 'react-icons/fi';
+import { TbRobot } from 'react-icons/tb';
 import { careerService } from '../services/api';
 
 const CareerInsights = () => {
@@ -120,7 +121,7 @@ const CareerInsights = () => {
                   {/* Matching Reason */}
                   {hasMatch && (
                     <div className="p-3 bg-sky-500/10 border border-sky-200/50 rounded-xl text-[11px] text-slate-700 leading-relaxed">
-                      <FiCpu size={12} className="inline mr-1 text-sky-500" />
+                      <TbRobot size={14} className="inline mr-1 text-sky-500" />
                       <strong>Match Reasoning:</strong> {path.reason}
                     </div>
                   )}

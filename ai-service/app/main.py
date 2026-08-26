@@ -8,7 +8,7 @@ from app.timeline import routes as timeline
 from app.smart_retrieval import router as smart_retrieval
 
 app = FastAPI(
-    title="MemoryVerse AI Service",
+    title="SecurizeVault Service",
     description="Python FastAPI service for Document Processing, OCR, and AI Tasks",
     version="1.0.0"
 )
@@ -42,7 +42,7 @@ async def startup_event():
 def read_root():
     return {
         "status": "online",
-        "service": "MemoryVerse AI Ingestion Engine",
+        "service": "SecurizeVault Ingestion Engine",
         "version": "1.0.0"
     }
 

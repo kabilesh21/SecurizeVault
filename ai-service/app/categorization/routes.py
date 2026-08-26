@@ -64,7 +64,7 @@ async def categorize_document(request: CategorizeRequest):
         from app.utils.gemini import call_gemini
         import json
         
-        response_text = call_gemini(prompt).strip()
+        response_text = call_gemini(prompt, json_mode=True).strip()
         # Clean potential markdown JSON syntax
         if response_text.startswith("```"):
             response_text = response_text.split("```")[1]
@@ -100,7 +100,12 @@ async def categorize_document(request: CategorizeRequest):
         )
         
     except Exception as ge:
-        logger.error(f"Gemini categorization failed: {ge}. Falling back to rule-based.")
+        response_snippet = ""
+        try:
+            response_snippet = response_text
+        except NameError:
+            pass
+        logger.error(f"Gemini categorization failed: {ge}. Response was: '{response_snippet}'. Falling back to rule-based.")
         
         try:
             # 2. Rule-based backup fallback
@@ -136,4 +141,6 @@ async def categorize_document(request: CategorizeRequest):
                 processingStatus="COMPLETED"
             )
         except Exception as fallback_err:
+            import traceback
+            logger.error(f"Fallback categorization failed: {fallback_err}\n{traceback.format_exc()}")
             raise HTTPException(status_code=500, detail=f"Categorization fallback failed: {str(fallback_err)}")

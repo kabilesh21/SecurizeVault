@@ -77,7 +77,7 @@ async def perform_search(request: SearchRequest):
             retrieved_context += f"- Title: {res.title}, Category: {res.resultType}, Skills: {skills_str}, Organization: {res.organization or 'Unknown'}, Date: {res.displayDate or 'Unknown'}\n"
             
         gemini_prompt = f"""
-        You are the MemoryVerse AI Assistant. Answer the student's question based on their portfolio documents.
+        You are the SecurizeVault AI Assistant. Answer the student's question based on their portfolio documents.
         Student's question: "{query}"
 
         Student's Portfolio Details:

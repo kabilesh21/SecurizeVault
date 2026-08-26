@@ -44,6 +44,9 @@ public class CategorizationService {
     @Autowired
     private SearchIndexService searchIndexService;
 
+    @Autowired
+    private AIService aiService;
+
     @Transactional
     public DocumentAnalysisResponse analyzeDocumentSync(Long documentId, Long userId) {
         Document document = documentRepository.findByIdAndUserId(documentId, userId)
@@ -64,6 +67,23 @@ public class CategorizationService {
 
         // 2. Fetch OCR text (Module 1 Output)
         String ocrText = document.getOcrText();
+        boolean isPlaceholder = ocrText == null || ocrText.trim().isEmpty() || ocrText.contains("OCR Placeholder");
+        if (isPlaceholder) {
+            try {
+                java.nio.file.Path path = java.nio.file.Paths.get(document.getFilePath());
+                byte[] fileBytes = java.nio.file.Files.readAllBytes(path);
+                if (fileBytes != null && fileBytes.length > 0) {
+                    String freshOcr = aiService.performOcr(document.getOriginalName(), fileBytes);
+                    if (freshOcr != null && !freshOcr.trim().isEmpty() && !freshOcr.contains("OCR Placeholder")) {
+                        ocrText = freshOcr;
+                        document.setOcrText(ocrText);
+                        documentRepository.save(document);
+                    }
+                }
+            } catch (Exception ex) {
+                System.err.println("Failed to perform fresh OCR during analysis: " + ex.getMessage());
+            }
+        }
         if (ocrText == null || ocrText.trim().isEmpty()) {
             ocrText = "OCR Placeholder text. " + document.getOriginalName();
             document.setOcrText(ocrText);

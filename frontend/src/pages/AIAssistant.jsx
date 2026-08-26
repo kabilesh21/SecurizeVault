@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FiSend, FiUser, FiCpu, FiMessageSquare, FiTrash2, FiZap } from 'react-icons/fi';
+import { TbRobot } from 'react-icons/tb';
 import { searchService } from '../services/api';
 
 const AIAssistant = () => {
@@ -7,7 +8,7 @@ const AIAssistant = () => {
     {
       id: 'welcome',
       sender: 'bot',
-      text: "Hello! I am your MemoryVerse AI Assistant. I can help you explore your uploaded documents, skills, timeline events, and career pathways. What would you like to know about your profile?",
+      text: "Hello! I am your SecurizeVault AI Assistant. I can help you explore your uploaded documents, skills, timeline events, and career pathways. What would you like to know about your profile?",
       timestamp: new Date()
     }
   ]);
@@ -113,10 +114,10 @@ const AIAssistant = () => {
       <div className="glass-panel p-4 flex justify-between items-center bg-white/40 border-slate-100">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 bg-indigo-650 text-white rounded-xl flex items-center justify-center shadow-md">
-            <FiCpu size={20} />
+            <TbRobot size={20} />
           </div>
           <div>
-            <h3 className="font-extrabold text-slate-800 text-sm">Portfolio AI Assistant</h3>
+            <h3 className="font-extrabold text-slate-800 text-sm">AI Assistant</h3>
             <p className="text-[11px] text-slate-600">Explore, analyze, and query your digital credentials conversively.</p>
           </div>
         </div>
@@ -137,7 +138,7 @@ const AIAssistant = () => {
             className={`flex gap-3 max-w-3xl ${msg.sender === 'user' ? 'ml-auto flex-row-reverse' : ''}`}
           >
             <div className={`h-8 w-8 rounded-lg flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-sky-500 text-white' : 'bg-indigo-650 text-white'}`}>
-              {msg.sender === 'user' ? <FiUser size={14} /> : <FiCpu size={14} />}
+              {msg.sender === 'user' ? <FiUser size={14} /> : <TbRobot size={14} />}
             </div>
             <div className={`p-4 rounded-2xl text-[11px] leading-relaxed ${
               msg.sender === 'user' 
@@ -156,7 +157,7 @@ const AIAssistant = () => {
         {sending && (
           <div className="flex gap-3 max-w-lg">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-indigo-650 text-white animate-pulse">
-              <FiCpu size={14} />
+              <TbRobot size={14} />
             </div>
             <div className="p-4 bg-white border border-slate-100 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2">
               <div className="h-1.5 w-1.5 bg-indigo-650 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>

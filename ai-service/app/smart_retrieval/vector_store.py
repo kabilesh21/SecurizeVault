@@ -111,7 +111,9 @@ def init_vector_store():
                 # Filter out lists or complex types or serialize them
                 serialized_meta = {}
                 for k, v in meta.items():
-                    if isinstance(v, (list, dict)):
+                    if v is None:
+                        serialized_meta[k] = ""
+                    elif isinstance(v, (list, dict)):
                         serialized_meta[k] = ",".join(map(str, v)) if isinstance(v, list) else str(v)
                     else:
                         serialized_meta[k] = v

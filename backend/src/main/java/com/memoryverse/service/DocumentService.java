@@ -3,6 +3,7 @@ package com.memoryverse.service;
 import com.memoryverse.dto.DashboardStatsResponse;
 import com.memoryverse.dto.DocumentResponse;
 import com.memoryverse.dto.UserProfileResponse;
+import com.memoryverse.dto.UpdateProfileRequest;
 import com.memoryverse.entity.Category;
 import com.memoryverse.entity.Document;
 import com.memoryverse.entity.PortfolioLink;
@@ -113,9 +114,17 @@ public class DocumentService {
 
             document = documentRepository.save(document);
 
-            // Trigger Mock Ingestion Flow (OCR, Metadata & Embedding Trigger)
-            processDocumentAI(document, file.getBytes());
-            categorizationService.analyzeDocumentAsync(document.getId(), userId);
+            // Trigger Ingestion & AI Flow Asynchronously in background to return upload response instantly
+            final Document finalDoc = document;
+            final byte[] fileBytes = file.getBytes();
+            java.util.concurrent.CompletableFuture.runAsync(() -> {
+                try {
+                    processDocumentAI(finalDoc, fileBytes);
+                    categorizationService.analyzeDocumentSync(finalDoc.getId(), userId);
+                } catch (Exception e) {
+                    System.err.println("Async document upload processing failed: " + e.getMessage());
+                }
+            });
 
             return mapToResponse(document);
         } catch (IOException e) {
@@ -215,8 +224,18 @@ public class DocumentService {
             document.setStatus("PENDING");
 
             document = documentRepository.save(document);
-            processDocumentAI(document, file.getBytes());
-            categorizationService.analyzeDocumentAsync(document.getId(), userId);
+
+            // Trigger Ingestion & AI Flow Asynchronously in background to return replace response instantly
+            final Document finalDoc = document;
+            final byte[] fileBytes = file.getBytes();
+            java.util.concurrent.CompletableFuture.runAsync(() -> {
+                try {
+                    processDocumentAI(finalDoc, fileBytes);
+                    categorizationService.analyzeDocumentSync(finalDoc.getId(), userId);
+                } catch (Exception e) {
+                    System.err.println("Async document replacement processing failed: " + e.getMessage());
+                }
+            });
 
             return mapToResponse(document);
         } catch (IOException e) {
@@ -378,5 +397,29 @@ public class DocumentService {
                 .ocrText(document.getOcrText())
                 .uploadedAt(document.getUploadedAt())
                 .build();
+    }
+
+    public UserProfileResponse updateProfile(Long userId, UpdateProfileRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        if (request.getUsername() != null && !request.getUsername().trim().isEmpty()) {
+            String newUsername = request.getUsername().trim();
+            if (!user.getUsername().equals(newUsername) && userRepository.existsByUsername(newUsername)) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Username is already taken");
+            }
+            user.setUsername(newUsername);
+        }
+
+        if (request.getEmail() != null && !request.getEmail().trim().isEmpty()) {
+            String newEmail = request.getEmail().trim();
+            if (!user.getEmail().equals(newEmail) && userRepository.existsByEmail(newEmail)) {
+                throw new ApiException(HttpStatus.BAD_REQUEST, "Email is already in use");
+            }
+            user.setEmail(newEmail);
+        }
+
+        userRepository.save(user);
+        return getProfile(userId);
     }
 }

@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
+public class UpdateProfileRequest {
     private String username;
     private String email;
-    private String password;
-    private String name;
-    private String college;
-    private Integer age;
-    private String dob;
 }

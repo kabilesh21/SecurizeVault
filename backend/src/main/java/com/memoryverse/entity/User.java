@@ -29,6 +29,18 @@ public class User {
     @Column(nullable = false, length = 20)
     private String role; // e.g., ROLE_STUDENT, ROLE_ADMIN
 
+    @Column(length = 100)
+    private String name;
+
+    @Column(length = 150)
+    private String college;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(length = 20)
+    private String dob;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 

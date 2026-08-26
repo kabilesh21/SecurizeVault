@@ -38,7 +38,9 @@ export const documentService = {
 // User Stats API services
 export const userService = {
   getStats: () => axios.get('/api/users/stats'),
-  getProfile: () => axios.get('/api/users/profile')
+  getProfile: () => axios.get('/api/users/profile'),
+  updateProfile: (data) => axios.put('/api/users/profile', data),
+  changePassword: (data) => axios.post('/api/users/change-password', data)
 };
 
 // Categorization API services

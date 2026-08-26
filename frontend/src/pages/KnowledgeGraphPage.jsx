@@ -411,7 +411,9 @@ const KnowledgeGraphPage = () => {
                   </div>
                   <div>
                     <span className="font-bold text-slate-450 dark:text-slate-550 uppercase tracking-wider block">Source</span>
-                    <span className="px-2 py-0.5 mt-0.5 rounded bg-slate-100 dark:bg-slate-800 font-bold font-mono text-[9px] text-slate-550 tracking-wide uppercase inline-block">{selectedEdge.relationshipSource}</span>
+                    <span className="px-2 py-0.5 mt-0.5 rounded bg-slate-100 dark:bg-slate-800 font-bold font-mono text-[9px] text-slate-550 tracking-wide uppercase inline-block">
+                      {selectedEdge.relationshipSource === 'USER_CONFIRMED' ? 'CONFIRMED' : selectedEdge.relationshipSource?.replace('_', ' ')}
+                    </span>
                   </div>
                 </div>
 

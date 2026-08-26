@@ -8,68 +8,68 @@ export default {
   theme: {
     extend: {
       colors: {
-        white: '#F5E6D3', // Theme Sandalwood Base Color for cards
+        white: '#FFFFFF', // Clean White Cards
         indigo: {
-          50: '#fdf9fb',
-          100: '#f6ebf0',
-          200: '#ecd7e1',
-          300: '#dbaec3',
-          400: '#c585a2',
-          500: '#a37085',
-          600: '#8c5b70', // Muted Mulberry
-          650: '#7c4d61',
-          700: '#6d4352',
-          800: '#54313f',
-          900: '#3e212d',
+          50: '#F0FAF9',
+          100: '#E0F5F3',
+          200: '#DDF4F1', // Secondary color
+          300: '#B0E6E2',
+          400: '#80D7D3',
+          500: '#3AAFAA', // Primary color
+          600: '#3AAFAA', // Primary color
+          650: '#2C9691',
+          700: '#237F7B', // Dark Primary
+          800: '#1A6360',
+          900: '#114240',
         },
         sky: {
-          50: '#FCF8F2',
-          100: '#F7EFE3',
-          205: '#EEDCBF',
-          300: '#E1C497',
-          400: '#D0A770',
-          500: '#B8864B', // Sandalwood Tan Primary Accent
-          600: '#9C6E39',
-          700: '#7E5529',
-          800: '#613E1B',
-          900: '#422910',
+          50: '#F0FAF9',
+          100: '#E0F5F3',
+          205: '#DDF4F1',
+          300: '#B0E6E2',
+          400: '#80D7D3',
+          500: '#3AAFAA', 
+          600: '#2C9691',
+          700: '#237F7B',
+          800: '#1A6360',
+          900: '#114240',
         },
         emerald: {
-          50: '#FCF8F2',
-          100: '#F7EFE3',
-          500: '#B8864B',
-          600: '#9C6E39',
-          700: '#7E5529',
+          50: '#F0FAF9',
+          100: '#E0F5F3',
+          500: '#3AAFAA',
+          600: '#2C9691',
+          700: '#237F7B',
         },
         slate: {
-          50: '#FAF5EE', // Warm cream backdrop
-          100: '#E5D3BC', // Warm Sandalwood border
-          150: '#D8C3A5',
-          200: '#C7AF8F',
-          250: '#B69C7A',
-          300: '#A68864',
-          400: '#95754F',
-          500: '#84623A',
-          600: '#744F26',
-          700: '#5F3D18',
-          800: '#4C300F',
-          850: '#39220A',
-          900: '#261505',
-          950: '#180B02',
+          50: '#F4F9F9', // Background color
+          100: '#E6F0F0',
+          150: '#DBEBEB',
+          200: '#D2E3E3',
+          250: '#BDD5D5',
+          300: '#AEC8C8',
+          400: '#7DA1A1',
+          500: '#4B7171',
+          600: '#284B4B',
+          700: '#1A3B3B',
+          800: '#123047', // Text color
+          850: '#123047', // Text color
+          900: '#0C2233',
+          950: '#071521',
         },
         orange: {
-          50: '#fffcf9',
-          100: '#fdf2e8',
-          500: '#f5c29b', // Soft Apricot
-          600: '#e4ac82',
-          700: '#c88c5f',
+          50: '#FFFDF9',
+          100: '#FFF6E6',
+          500: '#F6C176', 
+          600: '#DEA354',
+          700: '#B37D35',
         },
         amber: {
-          50: '#fffcf9',
-          100: '#fdf2e8',
-          500: '#f5c29b', // Soft Apricot
-          600: '#e4ac82',
-          700: '#c88c5f',
+          50: '#FFFDF9',
+          100: '#FFF6E6',
+          500: '#F6C176',
+          600: '#DEA354',
+          700: '#B37D35',
         }
       },
       fontFamily: {

@@ -22,7 +22,7 @@ const ComingSoon = ({ title, description }) => {
         </p>
         <div className="relative rounded-full px-4 py-1.5 text-sm leading-6 text-slate-600 dark:text-slate-400 ring-1 ring-slate-900/10 dark:ring-white/10 hover:ring-slate-900/20 dark:hover:ring-white/20">
           Module implementation coming soon. {' '}
-          <span className="font-semibold text-indigo-600 dark:text-indigo-400">MemoryVerse AI</span>
+          <span className="font-semibold text-indigo-600 dark:text-indigo-400">SecurizeVault</span>
         </div>
       </motion.div>
     </div>

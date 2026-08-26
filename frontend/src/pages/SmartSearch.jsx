@@ -183,7 +183,7 @@ const SmartSearch = () => {
       {/* ── Header & Indexing Status ── */}
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white">Ask MemoryVerse</h1>
+          <h1 className="text-3xl font-extrabold text-slate-800 dark:text-white">Ask SecurizeVault</h1>
           <p className="text-slate-500 dark:text-slate-400 mt-1 max-w-xl">
             Find any part of your academic and professional journey instantly.
           </p>
@@ -219,12 +219,12 @@ const SmartSearch = () => {
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             placeholder="Ask anything about your academic and professional journey..."
-            className="w-full pl-12 pr-28 py-4.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-250 dark:border-slate-850 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md text-slate-800 dark:text-white transition-all placeholder-slate-400"
+            className="w-full pl-14 pr-40 py-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md text-slate-850 dark:text-white transition-all placeholder-slate-400"
           />
-          <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400">
-            <FiSearch size={20} />
+          <div className="absolute left-5 top-1/2 transform -translate-y-1/2 text-slate-400">
+            <FiSearch size={22} />
           </div>
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1.5">
+          <div className="absolute right-3.5 top-1/2 transform -translate-y-1/2 flex items-center gap-2.5">
             <button
               onClick={toggleListening}
               className={`p-2 rounded-xl transition-colors ${listening ? 'bg-red-500 text-white animate-pulse' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'}`}
@@ -235,7 +235,7 @@ const SmartSearch = () => {
             <button
               onClick={() => handleSearch()}
               disabled={loading}
-              className="px-4 py-2 bg-indigo-650 hover:bg-indigo-600 text-white text-xs font-bold rounded-xl transition-colors disabled:opacity-50"
+              className="px-6 py-2.5 bg-indigo-650 hover:bg-indigo-600 text-white text-sm font-extrabold rounded-xl transition-colors disabled:opacity-50"
             >
               Search
             </button>
@@ -297,7 +297,7 @@ const SmartSearch = () => {
             /* Welcome state before search */
             <div className="py-24 text-center glass-panel">
               <FiSearch size={48} className="mx-auto text-indigo-500/30 mb-4" />
-              <h3 className="text-base font-extrabold text-slate-700 dark:text-white">Ask MemoryVerse Anything</h3>
+              <h3 className="text-base font-extrabold text-slate-700 dark:text-white">Ask SecurizeVault Anything</h3>
               <p className="text-xs text-slate-400 mt-2 max-w-sm mx-auto">
                 Type natural queries like "Show certificates related to Python" or "Find projects using Spring Boot" to explore.
               </p>
@@ -309,7 +309,7 @@ const SmartSearch = () => {
                 <FiX size={44} className="mx-auto text-slate-300 dark:text-slate-700 mb-3" />
                 <h3 className="text-base font-extrabold text-slate-700 dark:text-white">No Exact Match Found</h3>
                 <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto">
-                  MemoryVerse searched your complete digital journey but couldn't locate specific documents.
+                  SecurizeVault searched your complete digital journey but couldn't locate specific documents.
                 </p>
               </div>
               
