@@ -20,11 +20,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.beans.factory.annotation.Value;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
+
+    @Value("${app.frontend-url:http://localhost:5173}")
+    private String frontendUrl;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -114,10 +118,10 @@ public class AuthService {
                     + "  <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">You requested a password reset for your <strong>SecurizeVault</strong> account. Don't worry, we've got you covered! 🔒</p>"
                     + "  <p style=\"font-size: 14px; line-height: 1.6; color: #475569;\">Click the button below to securely reset your credentials and log back in:</p>"
                     + "  <div style=\"text-align: center; margin: 30px 0;\">"
-                    + "    <a href=\"http://localhost:5173/reset-password?email=" + user.getEmail() + "\" style=\"display: inline-block; padding: 12px 28px; background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%); color: #FFFFFF; font-weight: 700; font-size: 13px; text-decoration: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25); text-transform: uppercase; letter-spacing: 0.5px;\">Reset Password 🔑</a>"
+                    + "    <a href=\"" + frontendUrl + "/reset-password?email=" + user.getEmail() + "\" style=\"display: inline-block; padding: 12px 28px; background: linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%); color: #FFFFFF; font-weight: 700; font-size: 13px; text-decoration: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25); text-transform: uppercase; letter-spacing: 0.5px;\">Reset Password 🔑</a>"
                     + "  </div>"
                     + "  <p style=\"font-size: 12px; color: #64748B; line-height: 1.6;\">If the button above does not work, copy and paste this link into your web browser:</p>"
-                    + "  <p style=\"font-size: 12px; color: #0EA5E9; word-break: break-all;\"><a href=\"http://localhost:5173/reset-password?email=" + user.getEmail() + "\" style=\"color: #0EA5E9; text-decoration: underline;\">http://localhost:5173/reset-password?email=" + user.getEmail() + "</a></p>"
+                    + "  <p style=\"font-size: 12px; color: #0EA5E9; word-break: break-all;\"><a href=\"" + frontendUrl + "/reset-password?email=" + user.getEmail() + "\" style=\"color: #0EA5E9; text-decoration: underline;\">" + frontendUrl + "/reset-password?email=" + user.getEmail() + "</a></p>"
                     + "  <p style=\"font-size: 12px; color: #94A3B8; margin-top: 24px;\">If you did not make this request, please ignore this email. Your credentials remain safe.</p>"
                     + "  <hr style=\"border: none; border-top: 1.5px solid #F1F5F9; margin: 24px 0;\" />"
                     + "  <p style=\"font-size: 12px; color: #64748B; text-align: center; margin: 0;\">Warm regards,<br /><strong>SecurizeVault Security Team</strong></p>"
