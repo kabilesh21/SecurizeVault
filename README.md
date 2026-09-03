@@ -4,7 +4,7 @@
 
 ---
 
-# Live link - https://securize-vault.vercel.app/
+Live link - https://securize-vault.vercel.app/
 
 ---
 
