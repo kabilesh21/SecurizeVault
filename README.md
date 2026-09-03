@@ -4,6 +4,10 @@
 
 ---
 
+# Live link - https://securize-vault.vercel.app/
+
+---
+
 ##  Key Features
 
 | Module | Description |
@@ -66,51 +70,6 @@
 - **Google Gemini API** — LLM-powered categorization, entity extraction, and chat
 - **PyPDF / python-docx** — Document text extraction
 - **Multimodal OCR** — Image-to-text via Gemini vision
-
-### Database
-- **MySQL 8** — Relational database for users, documents, entities, and relationships
-
----
-
-## 🚀 Local Setup
-
-### Prerequisites
-- Java 17+
-- Node.js 18+
-- Python 3.9+
-- MySQL 8+
-- Maven 3.8+
-
-### 1. Database
-Create the database in MySQL:
-```sql
-SOURCE database/schema.sql;
-```
-
-### 2. AI Service
-```bash
-cd ai-service
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-
-### 3. Backend API
-Configure database & mail credentials in `backend/src/main/resources/application.properties`, then run:
-```bash
-cd backend
-mvn spring-boot:run
-```
-
-### 4. Frontend Application
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Open your browser at `http://localhost:5173`.
-
----
 
 ## 📁 Project Structure
 
